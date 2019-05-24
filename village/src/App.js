@@ -4,6 +4,7 @@ import {Route, Link} from 'react-router-dom';
 import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
+import Navbar from './components/SmurfNavbar';
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Navbar />
         <Route exact path='/' component={SmurfForm}/>
         <Route 
         path='/smurfs' 
