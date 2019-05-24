@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import '../App.css';
 
 class SmurfForm extends Component {
   constructor(props) {
@@ -6,48 +8,64 @@ class SmurfForm extends Component {
     this.state = {
       name: '',
       age: '',
-      height: ''
+      height: '',
+      newSmurf: null
     };
   }
 
   addSmurf = event => {
     event.preventDefault();
-    // add code to create the smurf using the api
 
     this.setState({
-      name: '',
-      age: '',
-      height: ''
+      name: event.target.name.value,
+      age: event.target.age.value,
+      height: event.target.height.value
     });
+
+    axios.post('http://localhost:3333/smurfs', this.state )
+    .then(res => {
+      console.log(res.data);
+      this.setState( {
+        newSmurf : res.data[res.data.length-1]
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    this.props.history.push('/smurfs')
+    window.location.reload();
+    return;
   }
 
   handleInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name] : e.target.value });
   };
 
   render() {
+    console.log(this.state);
     return (
       <div className="SmurfForm">
+        <h1>Smurf Application</h1>
         <form onSubmit={this.addSmurf}>
           <input
             onChange={this.handleInputChange}
-            placeholder="name"
+            placeholder="What Is Your Name?"
             value={this.state.name}
             name="name"
           />
           <input
             onChange={this.handleInputChange}
-            placeholder="age"
+            placeholder="How Old Are You?"
             value={this.state.age}
             name="age"
           />
           <input
             onChange={this.handleInputChange}
-            placeholder="height"
+            placeholder="How Tall Are You?"
             value={this.state.height}
             name="height"
           />
-          <button type="submit">Add to the village</button>
+          <button className='submit' type="submit">Join The Village</button>
         </form>
       </div>
     );
@@ -55,3 +73,5 @@ class SmurfForm extends Component {
 }
 
 export default SmurfForm;
+
+/* Clear */
