@@ -37,6 +37,7 @@ class App extends Component {
         path='/smurfs' 
         render= { props => <Smurfs {...props} smurfs={this.state.smurfs} /> } 
         />
+        
       </div>
     );
   }
